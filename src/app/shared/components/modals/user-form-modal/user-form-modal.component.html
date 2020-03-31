@@ -1,0 +1,98 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ formTitle }}</h4>
+  <button
+    type="button"
+    class="close"
+    *ngIf="!isAuthFormType"
+    (click)="activeModal.close()"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="userForm">
+    <div class="form-group">
+      <label for="email">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        [formControlName]="userFormFields.EMAIL"
+        [class.is-invalid]="isControlInvalid(userFormFields.EMAIL)"
+      />
+      <ng-container *ngIf="isControlInvalid(userFormFields.EMAIL)">
+        <div
+          class="invalid-feedback"
+          *ngIf="userForm.get(userFormFields.EMAIL).errors.required"
+        >
+          Please enter an email.
+        </div>
+        <div
+          class="invalid-feedback"
+          *ngIf="userForm.get(userFormFields.EMAIL).errors.email"
+        >
+          Please enter a correct email (example@mail.com).
+        </div>
+      </ng-container>
+    </div>
+    <div class="form-group" *ngIf="formType !== formTypes.LOGIN">
+      <label for="name">Name</label>
+      <input
+        type="name"
+        class="form-control"
+        id="name"
+        [formControlName]="userFormFields.NAME"
+      />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        [formControlName]="userFormFields.PASSWORD"
+        [class.is-invalid]="isControlInvalid(userFormFields.PASSWORD)"
+      />
+      <ng-container *ngIf="isControlInvalid(userFormFields.PASSWORD)">
+        <div
+          class="invalid-feedback"
+          *ngIf="userForm.get(userFormFields.PASSWORD).errors.required"
+        >
+          Please enter a password.
+        </div>
+        <div
+          class="invalid-feedback"
+          *ngIf="userForm.get(userFormFields.PASSWORD).errors.minlength"
+        >
+          Password must be at least
+          {{
+            userForm.get(userFormFields.PASSWORD).errors.minlength
+              .requiredLength
+          }}. Entered -
+          {{
+            userForm.get(userFormFields.PASSWORD).errors.minlength.actualLength
+          }}
+        </div>
+      </ng-container>
+    </div>
+  </form>
+</div>
+<div class="modal-footer justify-content-center">
+  <div class="auth-actions col-12 text-center" *ngIf="isAuthFormType">
+    <a [routerLink]="['/auth/register']" *ngIf="formType === formTypes.LOGIN"
+      >Don't have an account? Sign up</a
+    >
+    <a [routerLink]="['/auth/login']" *ngIf="formType === formTypes.REGISTER"
+      >Have an account? Sign in</a
+    >
+  </div>
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="submit()"
+    [disabled]="userForm.invalid || submitted"
+    ngbAutofocus
+  >
+    Submit
+  </button>
+</div>

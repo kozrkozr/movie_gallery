@@ -1,0 +1,17 @@
+<div
+  class="card h-100 text-center"
+>
+  <div class="card-header">
+    <span
+      class="material-icons cursor-pointer"
+      (click)="favoriteStatusChanged.emit(movie)"
+    >
+      {{ movie.isFavorite ? "star" : "star_border" }}
+    </span>
+  </div>
+  <img class="card-img-top img-fluid" [src]="movie.img" alt="Movie image" />
+  <div class="card-body">
+    <h5 class="card-title">{{ movie.name }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ movie.year }}</h6>
+  </div>
+</div>

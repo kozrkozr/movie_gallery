@@ -1,0 +1,28 @@
+<div class="card">
+  <div class="card-header d-flex">
+    <span class="material-icons">
+      star
+    </span>
+    <span class="font-weight-bold">
+      Favorite list
+    </span>
+  </div>
+  <ul
+    class="list-group list-group-flush"
+    *ngIf="(movies || []).length; else emptyText"
+  >
+    <li
+      class="list-group-item d-flex justify-content-between"
+      *ngFor="let movie of movies"
+    >
+      <span>{{ movie.name }}</span>
+      <span
+        class="material-icons cursor-pointer "
+        (click)="removed.emit(movie)"
+      >
+        clear
+      </span>
+    </li>
+  </ul>
+  <ng-template #emptyText><p class="text-center">List is empty</p></ng-template>
+</div>

@@ -1,0 +1,20 @@
+<div>
+  <span
+    ngbTooltip="Grid"
+    class="material-icons cursor-pointer"
+    [style.fontSize]="size + 'px'"
+    [class.text-muted]="value !== gridListValues.GRID"
+    (click)="value = gridListValues.GRID"
+  >
+    view_module
+  </span>
+  <span
+    ngbTooltip="List"
+    class="material-icons cursor-pointer"
+    [style.fontSize]="size + 'px'"
+    [class.text-muted]="value !== gridListValues.LIST"
+    (click)="value = gridListValues.LIST"
+  >
+    view_list
+  </span>
+</div>

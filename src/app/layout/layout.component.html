@@ -1,0 +1,8 @@
+<app-header
+  [currentUser]="currentUser$ | async"
+  (editUser)="editUser($event)"
+  (logout)="logout()"
+></app-header>
+<div class="container-fluid content">
+  <router-outlet> </router-outlet>
+</div>

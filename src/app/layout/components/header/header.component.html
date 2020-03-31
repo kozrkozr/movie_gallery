@@ -1,0 +1,20 @@
+<nav
+  class="navbar navbar-dark bg-dark justify-content-sm-between justify-content-center"
+>
+  <a [routerLink]="['/']" class="h1 text-light mr-2">Movies Gallery</a>
+  <div class="text-muted d-flex align-items-center">
+    <span
+      ngbTooltip="Edit profile"
+      class="mr-2 cursor-pointer hover-white-color"
+      (click)="editUser.emit(currentUser)"
+      >{{ currentUser.name }} {{ currentUser.email }}</span
+    >
+    <span
+      ngbTooltip="logout"
+      class="material-icons cursor-pointer hover-white-color"
+      (click)="logout.emit()"
+    >
+      exit_to_app
+    </span>
+  </div>
+</nav>

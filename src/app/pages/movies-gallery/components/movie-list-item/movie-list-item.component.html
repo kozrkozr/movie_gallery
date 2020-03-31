@@ -1,0 +1,30 @@
+<div class="card h-100">
+  <div class="row no-gutters">
+    <div class="col-4">
+      <img [src]="movie.img" class="card-img" alt="Movie image" />
+    </div>
+    <div class="col-8">
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-between">
+          <span>{{ movie.name }} {{ movie.year }}</span>
+          <span
+            class="material-icons cursor-pointer"
+            (click)="favoriteStatusChanged.emit(movie)"
+          >
+            {{ movie.isFavorite ? "star" : "star_border" }}
+          </span>
+        </h5>
+        <p class="card-text">{{ movie.description }}</p>
+        <div class="row">
+          <button
+            class="btn btn-light mr-2"
+            disabled
+            *ngFor="let genre of movie.genres"
+          >
+            {{ genre }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

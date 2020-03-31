@@ -1,0 +1,53 @@
+<div class="row p-2" *ngIf="movies$ | async as movies; else loading">
+  <div class="col-12 col-lg-9 order-1 order-lg-0">
+    <div class="row">
+      <div class="col-12">
+        <app-movies-nav
+          [genres]="genres$ | async"
+          (genreChanged)="selectGenre($event)"
+          (viewTypeChanged)="selectedViewType = $event"
+        ></app-movies-nav>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <ng-container
+            *ngIf="selectedViewType === viewTypes.GRID; else movieListItem"
+          >
+            <app-movie-grid-item
+              class="mb-2 cursor-pointer"
+              [ngClass]="setColClass()"
+              *ngFor="let movie of movies | appFilterByGenre: selectedGenre"
+              [movie]="movie"
+              (favoriteStatusChanged)="changeFavoriteMovies($event)"
+              (click)="openMovieDetailsModal(movie)"
+            ></app-movie-grid-item>
+          </ng-container>
+          <ng-template #movieListItem>
+            <app-movie-list-item
+              class="mb-2 cursor-pointer"
+              [ngClass]="setColClass()"
+              *ngFor="let movie of movies | appFilterByGenre: selectedGenre"
+              [movie]="movie"
+              (favoriteStatusChanged)="changeFavoriteMovies($event)"
+              (click)="openMovieDetailsModal(movie)"
+            ></app-movie-list-item>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-lg-3 order-0 order-lg-1">
+    <app-favorite-movies-list
+      [movies]="movies | appFavoriteMovies"
+      (removed)="changeFavoriteMovies($event)"
+    ></app-favorite-movies-list>
+  </div>
+</div>
+
+<ng-template #loading
+  ><div class="row justify-content-center p-2">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div></ng-template
+>

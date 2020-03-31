@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between align-items-center">
+  <div class="form-group row align-items-center col-8">
+    <label for="genres" class="col-sm-3">Choose genre</label>
+    <div class="col-sm-9">
+      <select class="form-control" id="genres" [formControl]="genreControl">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let genre of genres" [value]="genre">
+          {{ genre }}</option
+        >
+      </select>
+    </div>
+  </div>
+  <app-grid-list-control
+    [formControl]="gridListControl"
+  ></app-grid-list-control>
+</div>
