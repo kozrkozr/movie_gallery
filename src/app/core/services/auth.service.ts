@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   login(user: User): Observable<User> {
-    const foundedUser = this.getUsersList().find(
+    const foundedUser = Object.values(this.getUsersList()).find(
       u => u.email === user.email && u.password === user.password
     );
     if (foundedUser) {
@@ -84,27 +84,27 @@ export class AuthService {
       .pipe(map(({ favoriteMovies }) => favoriteMovies));
   }
 
-  getUsersList(): User[] {
-    return this.storageService.getItem(StorageKey.USERS) || [];
+  getUsersList(): { [key: string]: User } {
+    return this.storageService.getItem(StorageKey.USERS) || {};
   }
 
-  updateUsersList(users: User[]) {
+  updateUsersList(users: { [key: string]: User }) {
     this.storageService.setItem(StorageKey.USERS, users);
   }
 
   updateCurrentUser(user: User) {
     const usersList = this.getUsersList();
-    this.updateUsersList(usersList.map(u => (u.id === user.id ? user : u)));
+    this.updateUsersList({ ...usersList, [user.id]: user });
     this.saveUserInfo(user);
   }
 
   createUser(user: User) {
     const usersList = this.getUsersList();
-    if (usersList.find(u => u.email === user.email)) {
+    if (Object.values(usersList).find(u => u.email === user.email)) {
       return false;
     }
     const newUser = { ...user, id: generateId() };
-    this.updateUsersList([...usersList, newUser]);
+    this.updateUsersList({ ...usersList, [newUser.id]: newUser });
     this.saveUserInfo(newUser);
     return newUser;
   }
